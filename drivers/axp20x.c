@@ -473,7 +473,7 @@ float axpxx_getCoulombData()
     return AXP_NOT_INIT;
   uint32_t charge = axpxx_getBattChargeCoulomb(), discharge = axpxx_getBattDischargeCoulomb();
   uint8_t rate = axpxx_getAdcSamplingRate();
-  float result = 65536.0 * 0.5 * (charge - discharge) / 3600.0 / rate;
+  float result = 65536.0 * 0.5 * ((float)charge - (float)discharge) / 3600.0 / rate;
   return result;
 }
 
@@ -1192,7 +1192,7 @@ int axpxx_enableChargeing(bool en)
   if (!axpxx_init)
     return AXP_NOT_INIT;
   axpxx_readByte(AXP202_CHARGE1, 1, &val);
-  val |= (1 << 7);
+  val = en ? (val | _BV(7)) : val & (~_BV(7));
   axpxx_writeByte(AXP202_CHARGE1, 1, &val);
   return AXP_PASS;
 }
