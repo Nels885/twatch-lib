@@ -1345,7 +1345,7 @@ int axpxx_setTimer(uint8_t minutes)
 {
   if (!axpxx_init)
     return AXP_NOT_INIT;
-  if (axpxx_chip_id == AXP202_CHIP_ID) {
+  if (axpxx_chip_id == AXP202_CHIP_ID || axpxx_chip_id == AXP192_CHIP_ID) {
     if (minutes > 63) {
       return AXP_ARG_INVALID;
     }
@@ -1359,7 +1359,7 @@ int axpxx_offTimer()
 {
   if (!axpxx_init)
     return AXP_NOT_INIT;
-  if (axpxx_chip_id == AXP202_CHIP_ID) {
+  if (axpxx_chip_id == AXP202_CHIP_ID || axpxx_chip_id == AXP192_CHIP_ID) {
     uint8_t minutes = 0x80;
     axpxx_writeByte(AXP202_TIMER_CTL, 1, &minutes);
     return AXP_PASS;
@@ -1371,7 +1371,7 @@ int axpxx_clearTimerStatus()
 {
   if (!axpxx_init)
     return AXP_NOT_INIT;
-  if (axpxx_chip_id == AXP202_CHIP_ID) {
+  if (axpxx_chip_id == AXP202_CHIP_ID || axpxx_chip_id == AXP192_CHIP_ID) {
     uint8_t val;
     axpxx_readByte(AXP202_TIMER_CTL, 1, &val);
     val |= 0x80;
@@ -1379,6 +1379,18 @@ int axpxx_clearTimerStatus()
     return AXP_PASS;
   }
   return AXP_NOT_SUPPORT;
+}
+
+bool axpxx_getTimerStatus()
+{
+    if (!axpxx_init)
+        return AXP_NOT_INIT;
+    if (axpxx_chip_id == AXP202_CHIP_ID || axpxx_chip_id == AXP192_CHIP_ID) {
+        uint8_t val;
+        axpxx_readByte(AXP202_TIMER_CTL, 1, &val);
+        return ( val & 0x80 ) >> 7;
+    }
+    return AXP_NOT_SUPPORT;
 }
 
 /***********************************************

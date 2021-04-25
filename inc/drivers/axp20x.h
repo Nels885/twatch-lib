@@ -666,6 +666,7 @@ typedef enum {
     int axpxx_setTimer(uint8_t minutes);
     int axpxx_offTimer();
     int axpxx_clearTimerStatus();
+    bool axpxx_getTimerStatus();
     /**
      * param:   axp202_startup_time_t or axp192_startup_time_t
      */
