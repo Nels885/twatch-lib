@@ -55,17 +55,17 @@ github:https://github.com/lewisxhe/AXP202X_Libraries
 #include "drivers/i2c.h"
 
 //! Chip Address
-#define AXP202_SLAVE_ADDRESS (0x35)
-#define AXP192_SLAVE_ADDRESS (0x34)
-#define AXP173_SLAVE_ADDRESS (0x34)
+#define AXP202_SLAVE_ADDRESS                    (0x35U)
+#define AXP192_SLAVE_ADDRESS                    (0x34U)
+#define AXP173_SLAVE_ADDRESS                    (0x34U)
 
-#define AXP202_I2C_ADDRESS AXP202_SLAVE_ADDRESS
-#define AXP202_I2C_NUM I2C_NUM_0
-#define AXP202_SDA_PIN GPIO_NUM_21
-#define AXP202_SCL_PIN GPIO_NUM_22
+#define AXP202_I2C_ADDRESS                      AXP202_SLAVE_ADDRESS
+#define AXP202_I2C_NUM                          I2C_NUM_0
+#define AXP202_SDA_PIN                          GPIO_NUM_21
+#define AXP202_SCL_PIN                          GPIO_NUM_22
 
 #ifdef AXP_DEBUG_PORT
-#define AXP_DEBUG(fmt, ...) AXP_DEBUG_PORT.printf_P((PGM_P)PSTR(fmt), ##__VA_ARGS__)
+#define AXP_DEBUG(fmt, ...)     AXP_DEBUG_PORT.printf_P((PGM_P)PSTR(fmt), ##__VA_ARGS__)
 #else
 #define AXP_DEBUG(...)
 #endif
@@ -81,264 +81,271 @@ github:https://github.com/lewisxhe/AXP202X_Libraries
 #ifdef _BV
 #undef _BV
 #endif
-#define _BV(b) (1ULL << (b))
+#define _BV(b)                                  (1ULL << (b))
 
 //! Error Code
-#define AXP_PASS            (0)
-#define AXP_FAIL            (-1)
-#define AXP_INVALID         (-2)
-#define AXP_NOT_INIT        (-3)
-#define AXP_NOT_SUPPORT     (-4)
-#define AXP_ARG_INVALID     (-5)
-
+#define AXP_PASS                                (0)
+#define AXP_FAIL                                (-1)
+#define AXP_INVALID                             (-2)
+#define AXP_NOT_INIT                            (-3)
+#define AXP_NOT_SUPPORT                         (-4)
+#define AXP_ARG_INVALID                         (-5)
 
 #define IS_AXP173 false
 
 //! Chip ID
-#define AXP202_CHIP_ID 0x41
-#define AXP192_CHIP_ID 0x03
-#define AXP173_CHIP_ID 0xAD     //!Axp173 does not have a chip ID, given a custom ID
+#define AXP202_CHIP_ID                          (0x41)
+#define AXP192_CHIP_ID                          (0x03)
+#define AXP173_CHIP_ID                          (0xAD)     //!Axp173 does not have a chip ID, given a custom ID
 
 //! Logic states
-#define AXP202_ON 1
-#define AXP202_OFF 0
+#define AXP202_ON                               (1)
+#define AXP202_OFF                              (0)
 
 //! REG MAP
-#define AXP202_STATUS (0x00)
-#define AXP202_MODE_CHGSTATUS (0x01)
-#define AXP202_OTG_STATUS (0x02)
-#define AXP202_IC_TYPE (0x03)
-#define AXP202_DATA_BUFFER1 (0x04)
-#define AXP202_DATA_BUFFER2 (0x05)
-#define AXP202_DATA_BUFFER3 (0x06)
-#define AXP202_DATA_BUFFER4 (0x07)
-#define AXP202_DATA_BUFFER5 (0x08)
-#define AXP202_DATA_BUFFER6 (0x09)
-#define AXP202_DATA_BUFFER7 (0x0A)
-#define AXP202_DATA_BUFFER8 (0x0B)
-#define AXP202_DATA_BUFFER9 (0x0C)
-#define AXP202_DATA_BUFFERA (0x0D)
-#define AXP202_DATA_BUFFERB (0x0E)
-#define AXP202_DATA_BUFFERC (0x0F)
-#define AXP202_LDO234_DC23_CTL (0x12)
-#define AXP202_DC2OUT_VOL (0x23)
-#define AXP202_LDO3_DC2_DVM (0x25)
-#define AXP202_DC3OUT_VOL (0x27)
-#define AXP202_LDO24OUT_VOL (0x28)
-#define AXP202_LDO3OUT_VOL (0x29)
-#define AXP202_IPS_SET (0x30)
-#define AXP202_VOFF_SET (0x31)
-#define AXP202_OFF_CTL (0x32)
-#define AXP202_CHARGE1 (0x33)
-#define AXP202_CHARGE2 (0x34)
-#define AXP202_BACKUP_CHG (0x35)
-#define AXP202_POK_SET (0x36)
-#define AXP202_DCDC_FREQSET (0x37)
-#define AXP202_VLTF_CHGSET (0x38)
-#define AXP202_VHTF_CHGSET (0x39)
-#define AXP202_APS_WARNING1 (0x3A)
-#define AXP202_APS_WARNING2 (0x3B)
-#define AXP202_TLTF_DISCHGSET (0x3C)
-#define AXP202_THTF_DISCHGSET (0x3D)
-#define AXP202_DCDC_MODESET (0x80)
-#define AXP202_ADC_EN1 (0x82)
-#define AXP202_ADC_EN2 (0x83)
-#define AXP202_ADC_SPEED (0x84)
-#define AXP202_ADC_INPUTRANGE (0x85)
-#define AXP202_ADC_IRQ_RETFSET (0x86)
-#define AXP202_ADC_IRQ_FETFSET (0x87)
-#define AXP202_TIMER_CTL (0x8A)
-#define AXP202_VBUS_DET_SRP (0x8B)
-#define AXP202_HOTOVER_CTL (0x8F)
-#define AXP202_GPIO0_CTL (0x90)
-#define AXP202_GPIO0_VOL (0x91)
-#define AXP202_GPIO1_CTL (0x92)
-#define AXP202_GPIO2_CTL (0x93)
-#define AXP202_GPIO012_SIGNAL (0x94)
-#define AXP202_GPIO3_CTL (0x95)
-#define AXP202_INTEN1 (0x40)
-#define AXP202_INTEN2 (0x41)
-#define AXP202_INTEN3 (0x42)
-#define AXP202_INTEN4 (0x43)
-#define AXP202_INTEN5 (0x44)
-#define AXP202_INTSTS1 (0x48)
-#define AXP202_INTSTS2 (0x49)
-#define AXP202_INTSTS3 (0x4A)
-#define AXP202_INTSTS4 (0x4B)
-#define AXP202_INTSTS5 (0x4C)
+#define AXP202_STATUS                           (0x00)
+#define AXP202_MODE_CHGSTATUS                   (0x01)
+#define AXP202_OTG_STATUS                       (0x02)
+#define AXP202_IC_TYPE                          (0x03)
+#define AXP202_DATA_BUFFER1                     (0x04)
+#define AXP202_DATA_BUFFER2                     (0x05)
+#define AXP202_DATA_BUFFER3                     (0x06)
+#define AXP202_DATA_BUFFER4                     (0x07)
+#define AXP202_DATA_BUFFER5                     (0x08)
+#define AXP202_DATA_BUFFER6                     (0x09)
+#define AXP202_DATA_BUFFER7                     (0x0A)
+#define AXP202_DATA_BUFFER8                     (0x0B)
+#define AXP202_DATA_BUFFER9                     (0x0C)
+#define AXP202_DATA_BUFFERA                     (0x0D)
+#define AXP202_DATA_BUFFERB                     (0x0E)
+#define AXP202_DATA_BUFFERC                     (0x0F)
+#define AXP202_LDO234_DC23_CTL                  (0x12)
+#define AXP202_DC2OUT_VOL                       (0x23)
+#define AXP202_LDO3_DC2_DVM                     (0x25)
+#define AXP202_DC3OUT_VOL                       (0x27)
+#define AXP202_LDO24OUT_VOL                     (0x28)
+#define AXP202_LDO3OUT_VOL                      (0x29)
+#define AXP202_IPS_SET                          (0x30)
+#define AXP202_VOFF_SET                         (0x31)
+#define AXP202_OFF_CTL                          (0x32)
+#define AXP202_CHARGE1                          (0x33)
+#define AXP202_CHARGE2                          (0x34)
+#define AXP202_BACKUP_CHG                       (0x35)
+#define AXP202_POK_SET                          (0x36)
+#define AXP202_DCDC_FREQSET                     (0x37)
+#define AXP202_VLTF_CHGSET                      (0x38)
+#define AXP202_VHTF_CHGSET                      (0x39)
+#define AXP202_APS_WARNING1                     (0x3A)
+#define AXP202_APS_WARNING2                     (0x3B)
+#define AXP202_TLTF_DISCHGSET                   (0x3C)
+#define AXP202_THTF_DISCHGSET                   (0x3D)
+#define AXP202_DCDC_MODESET                     (0x80)
+#define AXP202_ADC_EN1                          (0x82)
+#define AXP202_ADC_EN2                          (0x83)
+#define AXP202_ADC_SPEED                        (0x84)
+#define AXP202_ADC_INPUTRANGE                   (0x85)
+#define AXP202_ADC_IRQ_RETFSET                  (0x86)
+#define AXP202_ADC_IRQ_FETFSET                  (0x87)
+#define AXP202_TIMER_CTL                        (0x8A)
+#define AXP202_VBUS_DET_SRP                     (0x8B)
+#define AXP202_HOTOVER_CTL                      (0x8F)
+#define AXP202_GPIO0_CTL                        (0x90)
+#define AXP202_GPIO0_VOL                        (0x91)
+#define AXP202_GPIO1_CTL                        (0x92)
+#define AXP202_GPIO2_CTL                        (0x93)
+#define AXP202_GPIO012_SIGNAL                   (0x94)
+#define AXP202_GPIO3_CTL                        (0x95)
+#define AXP202_INTEN1                           (0x40)
+#define AXP202_INTEN2                           (0x41)
+#define AXP202_INTEN3                           (0x42)
+#define AXP202_INTEN4                           (0x43)
+#define AXP202_INTEN5                           (0x44)
+#define AXP202_INTSTS1                          (0x48)
+#define AXP202_INTSTS2                          (0x49)
+#define AXP202_INTSTS3                          (0x4A)
+#define AXP202_INTSTS4                          (0x4B)
+#define AXP202_INTSTS5                          (0x4C)
 
 //Irq control register
-#define AXP192_INTEN1 (0x40)
-#define AXP192_INTEN2 (0x41)
-#define AXP192_INTEN3 (0x42)
-#define AXP192_INTEN4 (0x43)
-#define AXP192_INTEN5 (0x4A)
+#define AXP192_INTEN1                           (0x40)
+#define AXP192_INTEN2                           (0x41)
+#define AXP192_INTEN3                           (0x42)
+#define AXP192_INTEN4                           (0x43)
+#define AXP192_INTEN5                           (0x4A)
 //Irq status register
-#define AXP192_INTSTS1 (0x44)
-#define AXP192_INTSTS2 (0x45)
-#define AXP192_INTSTS3 (0x46)
-#define AXP192_INTSTS4 (0x47)
-#define AXP192_INTSTS5 (0x4D)
+#define AXP192_INTSTS1                          (0x44)
+#define AXP192_INTSTS2                          (0x45)
+#define AXP192_INTSTS3                          (0x46)
+#define AXP192_INTSTS4                          (0x47)
+#define AXP192_INTSTS5                          (0x4D)
 
-#define AXP192_DC1_VLOTAGE (0x26)
-#define AXP192_LDO23OUT_VOL (0x28)
-#define AXP192_GPIO0_CTL (0x90)
-#define AXP192_GPIO0_VOL (0x91)
-#define AXP192_GPIO1_CTL (0X92)
-#define AXP192_GPIO2_CTL (0x93)
-#define AXP192_GPIO012_SIGNAL (0x94)
-#define AXP192_GPIO34_CTL (0x95)
+#define AXP192_DC1_VLOTAGE                      (0x26)
+#define AXP192_LDO23OUT_VOL                     (0x28)
+#define AXP192_GPIO0_CTL                        (0x90)
+#define AXP192_GPIO0_VOL                        (0x91)
+#define AXP192_GPIO1_CTL                        (0X92)
+#define AXP192_GPIO2_CTL                        (0x93)
+#define AXP192_GPIO012_SIGNAL                   (0x94)
+#define AXP192_GPIO34_CTL                       (0x95)
 
 /* axp 192/202 adc data register */
-#define AXP202_BAT_AVERVOL_H8 (0x78)
-#define AXP202_BAT_AVERVOL_L4 (0x79)
-#define AXP202_BAT_AVERCHGCUR_H8 (0x7A)
-#define AXP202_BAT_AVERCHGCUR_L4 (0x7B)
-#define AXP202_BAT_AVERCHGCUR_L5 (0x7B)
-#define AXP202_ACIN_VOL_H8 (0x56)
-#define AXP202_ACIN_VOL_L4 (0x57)
-#define AXP202_ACIN_CUR_H8 (0x58)
-#define AXP202_ACIN_CUR_L4 (0x59)
-#define AXP202_VBUS_VOL_H8 (0x5A)
-#define AXP202_VBUS_VOL_L4 (0x5B)
-#define AXP202_VBUS_CUR_H8 (0x5C)
-#define AXP202_VBUS_CUR_L4 (0x5D)
-#define AXP202_INTERNAL_TEMP_H8 (0x5E)
-#define AXP202_INTERNAL_TEMP_L4 (0x5F)
-#define AXP202_TS_IN_H8 (0x62)
-#define AXP202_TS_IN_L4 (0x63)
-#define AXP202_GPIO0_VOL_ADC_H8 (0x64)
-#define AXP202_GPIO0_VOL_ADC_L4 (0x65)
-#define AXP202_GPIO1_VOL_ADC_H8 (0x66)
-#define AXP202_GPIO1_VOL_ADC_L4 (0x67)
+#define AXP202_BAT_AVERVOL_H8                   (0x78)
+#define AXP202_BAT_AVERVOL_L4                   (0x79)
+#define AXP202_BAT_AVERCHGCUR_H8                (0x7A)
+#define AXP202_BAT_AVERCHGCUR_L4                (0x7B)
+#define AXP202_BAT_AVERCHGCUR_L5                (0x7B)
+#define AXP202_ACIN_VOL_H8                      (0x56)
+#define AXP202_ACIN_VOL_L4                      (0x57)
+#define AXP202_ACIN_CUR_H8                      (0x58)
+#define AXP202_ACIN_CUR_L4                      (0x59)
+#define AXP202_VBUS_VOL_H8                      (0x5A)
+#define AXP202_VBUS_VOL_L4                      (0x5B)
+#define AXP202_VBUS_CUR_H8                      (0x5C)
+#define AXP202_VBUS_CUR_L4                      (0x5D)
+#define AXP202_INTERNAL_TEMP_H8                 (0x5E)
+#define AXP202_INTERNAL_TEMP_L4                 (0x5F)
+#define AXP202_TS_IN_H8                         (0x62)
+#define AXP202_TS_IN_L4                         (0x63)
+#define AXP202_GPIO0_VOL_ADC_H8                 (0x64)
+#define AXP202_GPIO0_VOL_ADC_L4                 (0x65)
+#define AXP202_GPIO1_VOL_ADC_H8                 (0x66)
+#define AXP202_GPIO1_VOL_ADC_L4                 (0x67)
 
-#define AXP202_BAT_AVERDISCHGCUR_H8 (0x7C)
-#define AXP202_BAT_AVERDISCHGCUR_L5 (0x7D)
-#define AXP202_APS_AVERVOL_H8 (0x7E)
-#define AXP202_APS_AVERVOL_L4 (0x7F)
-#define AXP202_INT_BAT_CHGCUR_H8 (0xA0)
-#define AXP202_INT_BAT_CHGCUR_L4 (0xA1)
-#define AXP202_EXT_BAT_CHGCUR_H8 (0xA2)
-#define AXP202_EXT_BAT_CHGCUR_L4 (0xA3)
-#define AXP202_INT_BAT_DISCHGCUR_H8 (0xA4)
-#define AXP202_INT_BAT_DISCHGCUR_L4 (0xA5)
-#define AXP202_EXT_BAT_DISCHGCUR_H8 (0xA6)
-#define AXP202_EXT_BAT_DISCHGCUR_L4 (0xA7)
-#define AXP202_BAT_CHGCOULOMB3 (0xB0)
-#define AXP202_BAT_CHGCOULOMB2 (0xB1)
-#define AXP202_BAT_CHGCOULOMB1 (0xB2)
-#define AXP202_BAT_CHGCOULOMB0 (0xB3)
-#define AXP202_BAT_DISCHGCOULOMB3 (0xB4)
-#define AXP202_BAT_DISCHGCOULOMB2 (0xB5)
-#define AXP202_BAT_DISCHGCOULOMB1 (0xB6)
-#define AXP202_BAT_DISCHGCOULOMB0 (0xB7)
-#define AXP202_COULOMB_CTL (0xB8)
-#define AXP202_BAT_POWERH8 (0x70)
-#define AXP202_BAT_POWERM8 (0x71)
-#define AXP202_BAT_POWERL8 (0x72)
+#define AXP202_BAT_AVERDISCHGCUR_H8             (0x7C)
+#define AXP202_BAT_AVERDISCHGCUR_L5             (0x7D)
+#define AXP202_APS_AVERVOL_H8                   (0x7E)
+#define AXP202_APS_AVERVOL_L4                   (0x7F)
+#define AXP202_INT_BAT_CHGCUR_H8                (0xA0)
+#define AXP202_INT_BAT_CHGCUR_L4                (0xA1)
+#define AXP202_EXT_BAT_CHGCUR_H8                (0xA2)
+#define AXP202_EXT_BAT_CHGCUR_L4                (0xA3)
+#define AXP202_INT_BAT_DISCHGCUR_H8             (0xA4)
+#define AXP202_INT_BAT_DISCHGCUR_L4             (0xA5)
+#define AXP202_EXT_BAT_DISCHGCUR_H8             (0xA6)
+#define AXP202_EXT_BAT_DISCHGCUR_L4             (0xA7)
+#define AXP202_BAT_CHGCOULOMB3                  (0xB0)
+#define AXP202_BAT_CHGCOULOMB2                  (0xB1)
+#define AXP202_BAT_CHGCOULOMB1                  (0xB2)
+#define AXP202_BAT_CHGCOULOMB0                  (0xB3)
+#define AXP202_BAT_DISCHGCOULOMB3               (0xB4)
+#define AXP202_BAT_DISCHGCOULOMB2               (0xB5)
+#define AXP202_BAT_DISCHGCOULOMB1               (0xB6)
+#define AXP202_BAT_DISCHGCOULOMB0               (0xB7)
+#define AXP202_COULOMB_CTL                      (0xB8)
+#define AXP202_BAT_POWERH8                      (0x70)
+#define AXP202_BAT_POWERM8                      (0x71)
+#define AXP202_BAT_POWERL8                      (0x72)
 
-#define AXP202_VREF_TEM_CTRL (0xF3)
-#define AXP202_BATT_PERCENTAGE (0xB9)
+#define AXP202_VREF_TEM_CTRL                    (0xF3)
+#define AXP202_BATT_PERCENTAGE                  (0xB9)
 
 /* bit definitions for AXP events, irq event */
 /*  AXP202  */
-#define AXP202_IRQ_USBLO (1)
-#define AXP202_IRQ_USBRE (2)
-#define AXP202_IRQ_USBIN (3)
-#define AXP202_IRQ_USBOV (4)
-#define AXP202_IRQ_ACRE (5)
-#define AXP202_IRQ_ACIN (6)
-#define AXP202_IRQ_ACOV (7)
+#define AXP202_IRQ_USBLO                        (1)
+#define AXP202_IRQ_USBRE                        (2)
+#define AXP202_IRQ_USBIN                        (3)
+#define AXP202_IRQ_USBOV                        (4)
+#define AXP202_IRQ_ACRE                         (5)
+#define AXP202_IRQ_ACIN                         (6)
+#define AXP202_IRQ_ACOV                         (7)
 
-#define AXP202_IRQ_TEMLO (8)
-#define AXP202_IRQ_TEMOV (9)
-#define AXP202_IRQ_CHAOV (10)
-#define AXP202_IRQ_CHAST (11)
-#define AXP202_IRQ_BATATOU (12)
-#define AXP202_IRQ_BATATIN (13)
-#define AXP202_IRQ_BATRE (14)
-#define AXP202_IRQ_BATIN (15)
+#define AXP202_IRQ_TEMLO                        (8)
+#define AXP202_IRQ_TEMOV                        (9)
+#define AXP202_IRQ_CHAOV                        (10)
+#define AXP202_IRQ_CHAST                        (11)
+#define AXP202_IRQ_BATATOU                      (12)
+#define AXP202_IRQ_BATATIN                      (13)
+#define AXP202_IRQ_BATRE                        (14)
+#define AXP202_IRQ_BATIN                        (15)
 
-#define AXP202_IRQ_POKLO (16)
-#define AXP202_IRQ_POKSH (17)
-#define AXP202_IRQ_LDO3LO (18)
-#define AXP202_IRQ_DCDC3LO (19)
-#define AXP202_IRQ_DCDC2LO (20)
-#define AXP202_IRQ_CHACURLO (22)
-#define AXP202_IRQ_ICTEMOV (23)
+#define AXP202_IRQ_POKLO                        (16)
+#define AXP202_IRQ_POKSH                        (17)
+#define AXP202_IRQ_LDO3LO                       (18)
+#define AXP202_IRQ_DCDC3LO                      (19)
+#define AXP202_IRQ_DCDC2LO                      (20)
+#define AXP202_IRQ_CHACURLO                     (22)
+#define AXP202_IRQ_ICTEMOV                      (23)
 
-#define AXP202_IRQ_EXTLOWARN2 (24)
-#define AXP202_IRQ_EXTLOWARN1 (25)
-#define AXP202_IRQ_SESSION_END (26)
-#define AXP202_IRQ_SESS_AB_VALID (27)
-#define AXP202_IRQ_VBUS_UN_VALID (28)
-#define AXP202_IRQ_VBUS_VALID (29)
-#define AXP202_IRQ_PDOWN_BY_NOE (30)
-#define AXP202_IRQ_PUP_BY_NOE (31)
+#define AXP202_IRQ_EXTLOWARN2                   (24)
+#define AXP202_IRQ_EXTLOWARN1                   (25)
+#define AXP202_IRQ_SESSION_END                  (26)
+#define AXP202_IRQ_SESS_AB_VALID                (27)
+#define AXP202_IRQ_VBUS_UN_VALID                (28)
+#define AXP202_IRQ_VBUS_VALID                   (29)
+#define AXP202_IRQ_PDOWN_BY_NOE                 (30)
+#define AXP202_IRQ_PUP_BY_NOE                   (31)
 
-#define AXP202_IRQ_GPIO0TG (32)
-#define AXP202_IRQ_GPIO1TG (33)
-#define AXP202_IRQ_GPIO2TG (34)
-#define AXP202_IRQ_GPIO3TG (35)
-#define AXP202_IRQ_PEKFE (37)
-#define AXP202_IRQ_PEKRE (38)
-#define AXP202_IRQ_TIMER (39)
+#define AXP202_IRQ_GPIO0TG                      (32)
+#define AXP202_IRQ_GPIO1TG                      (33)
+#define AXP202_IRQ_GPIO2TG                      (34)
+#define AXP202_IRQ_GPIO3TG                      (35)
+#define AXP202_IRQ_PEKFE                        (37)
+#define AXP202_IRQ_PEKRE                        (38)
+#define AXP202_IRQ_TIMER                        (39)
 
 //Signal Capture
-#define AXP202_BATT_VOLTAGE_STEP (1.1F)
-#define AXP202_BATT_DISCHARGE_CUR_STEP (0.5F)
-#define AXP202_BATT_CHARGE_CUR_STEP (0.5F)
-#define AXP202_ACIN_VOLTAGE_STEP (1.7F)
-#define AXP202_ACIN_CUR_STEP (0.625F)
-#define AXP202_VBUS_VOLTAGE_STEP (1.7F)
-#define AXP202_VBUS_CUR_STEP (0.375F)
-#define AXP202_INTERNAL_TEMP_STEP (0.1F)
-#define AXP202_APS_VOLTAGE_STEP (1.4F)
-#define AXP202_TS_PIN_OUT_STEP (0.8F)
-#define AXP202_GPIO0_STEP (0.5F)
-#define AXP202_GPIO1_STEP (0.5F)
+#define AXP202_BATT_VOLTAGE_STEP                (1.1F)
+#define AXP202_BATT_DISCHARGE_CUR_STEP          (0.5F)
+#define AXP202_BATT_CHARGE_CUR_STEP             (0.5F)
+#define AXP202_ACIN_VOLTAGE_STEP                (1.7F)
+#define AXP202_ACIN_CUR_STEP                    (0.625F)
+#define AXP202_VBUS_VOLTAGE_STEP                (1.7F)
+#define AXP202_VBUS_CUR_STEP                    (0.375F)
+#define AXP202_INTERNAL_TEMP_STEP               (0.1F)
+#define AXP202_APS_VOLTAGE_STEP                 (1.4F)
+#define AXP202_TS_PIN_OUT_STEP                  (0.8F)
+#define AXP202_GPIO0_STEP                       (0.5F)
+#define AXP202_GPIO1_STEP                       (0.5F)
 // AXP192 only
-#define AXP202_GPIO2_STEP (0.5F)
-#define AXP202_GPIO3_STEP (0.5F)
+#define AXP202_GPIO2_STEP                       (0.5F)
+#define AXP202_GPIO3_STEP                       (0.5F)
 
 // AXP173
-#define AXP173_EXTEN_DC2_CTL   (0x10)
-#define AXP173_CTL_DC2_BIT      (0)
-#define AXP173_CTL_EXTEN_BIT    (2)
-#define AXP173_DC1_VLOTAGE      (0x26)
-#define AXP173_LDO4_VLOTAGE     (0x27)
+#define AXP173_EXTEN_DC2_CTL                    (0x10)
+#define AXP173_CTL_DC2_BIT                      (0)
+#define AXP173_CTL_EXTEN_BIT                    (2)
+#define AXP173_DC1_VLOTAGE                      (0x26)
+#define AXP173_LDO4_VLOTAGE                     (0x27)
 
 #define FORCED_OPEN_DCDC3(x) (x |= (AXP202_ON << AXP202_DCDC3))
 #define BIT_MASK(x) (1 << x)
 #define IS_OPEN(reg, channel) (bool)(reg & BIT_MASK(channel))
 
+#define ISCONNECTED(ret)       do{if(!_init)return ret;}while(0)
+
+
+#define AXP202_VOFF_MASK                        (0x03)
+#define AXP202_LIMIT_MASK                       (0x03)
+#define AXP192_LIMIT_MASK                       (0x01)
+#define AXP192_LIMIT_EN_MASK                    (0x02)
+
 enum {
-    AXP202_EXTEN = 0,
-    AXP202_DCDC3 = 1,
-    AXP202_LDO2 = 2,
-    AXP202_LDO4 = 3,
-    AXP202_DCDC2 = 4,
-    AXP202_LDO3 = 6,
+    AXP202_EXTEN    = 0,
+    AXP202_DCDC3    = 1,
+    AXP202_LDO2     = 2,
+    AXP202_LDO4     = 3,
+    AXP202_DCDC2    = 4,
+    AXP202_LDO3     = 6,
     AXP202_OUTPUT_MAX,
 };
 
 enum {
-    AXP192_DCDC1 = 0,
-    AXP192_DCDC3 = 1,
-    AXP192_LDO2 = 2,
-    AXP192_LDO3 = 3,
-    AXP192_DCDC2 = 4,
-    AXP192_EXTEN = 6,
+    AXP192_DCDC1    = 0,
+    AXP192_DCDC3    = 1,
+    AXP192_LDO2     = 2,
+    AXP192_LDO3     = 3,
+    AXP192_DCDC2    = 4,
+    AXP192_EXTEN    = 6,
     AXP192_OUTPUT_MAX,
 };
 
 enum {
-    AXP173_DCDC1 = 0,
-    AXP173_LDO4 = 1,
-    AXP173_LDO2 = 2,
-    AXP173_LDO3 = 3,
-    AXP173_DCDC2 = 4,
-    AXP173_EXTEN = 6,
+    AXP173_DCDC1    = 0,
+    AXP173_LDO4     = 1,
+    AXP173_LDO2     = 2,
+    AXP173_LDO3     = 3,
+    AXP173_DCDC2    = 4,
+    AXP173_EXTEN    = 6,
     AXP173_OUTPUT_MAX,
 };
 
@@ -380,21 +387,21 @@ typedef enum {
 
 //REG 82H: ADC Enable 1 register Parameter
 typedef enum {
-    AXP202_BATT_VOL_ADC1 = 1 << 7,
-    AXP202_BATT_CUR_ADC1 = 1 << 6,
-    AXP202_ACIN_VOL_ADC1 = 1 << 5,
-    AXP202_ACIN_CUR_ADC1 = 1 << 4,
-    AXP202_VBUS_VOL_ADC1 = 1 << 3,
-    AXP202_VBUS_CUR_ADC1 = 1 << 2,
-    AXP202_APS_VOL_ADC1 = 1 << 1,
-    AXP202_TS_PIN_ADC1 = 1 << 0
+    AXP202_BATT_VOL_ADC1    = _BV(7),
+    AXP202_BATT_CUR_ADC1    = _BV(6),
+    AXP202_ACIN_VOL_ADC1    = _BV(5),
+    AXP202_ACIN_CUR_ADC1    = _BV(4),
+    AXP202_VBUS_VOL_ADC1    = _BV(3),
+    AXP202_VBUS_CUR_ADC1    = _BV(2),
+    AXP202_APS_VOL_ADC1     = _BV(1),
+    AXP202_TS_PIN_ADC1      = _BV(0)
 } axp_adc1_func_t;
 
 // REG 83H: ADC Enable 2 register Parameter
 typedef enum {
-    AXP202_TEMP_MONITORING_ADC2 = 1 << 7,
-    AXP202_GPIO1_FUNC_ADC2 = 1 << 3,
-    AXP202_GPIO0_FUNC_ADC2 = 1 << 2
+    AXP202_TEMP_MONITORING_ADC2 = _BV(7),
+    AXP202_GPIO1_FUNC_ADC2      = _BV(3),
+    AXP202_GPIO0_FUNC_ADC2      = _BV(2)
 } axp_adc2_func_t;
 
 typedef enum {
@@ -494,8 +501,8 @@ typedef enum {
 } axp_chgled_mode_t;
 
 typedef enum {
-    AXP_ADC_SAMPLING_RATE_25HZ = 0,
-    AXP_ADC_SAMPLING_RATE_50HZ = 1,
+    AXP_ADC_SAMPLING_RATE_25HZ  = 0,
+    AXP_ADC_SAMPLING_RATE_50HZ  = 1,
     AXP_ADC_SAMPLING_RATE_100HZ = 2,
     AXP_ADC_SAMPLING_RATE_200HZ = 3,
 } axp_adc_sampling_rate_t;
@@ -508,15 +515,15 @@ typedef enum {
 } axp_ts_pin_current_t;
 
 typedef enum {
-    AXP_TS_PIN_FUNCTION_BATT = 0,
-    AXP_TS_PIN_FUNCTION_ADC = 1,
+    AXP_TS_PIN_FUNCTION_BATT    = 0,
+    AXP_TS_PIN_FUNCTION_ADC     = 1,
 } axp_ts_pin_function_t;
 
 typedef enum {
-    AXP_TS_PIN_MODE_DISABLE = 0,
-    AXP_TS_PIN_MODE_CHARGING = 1,
-    AXP_TS_PIN_MODE_SAMPLING = 2,
-    AXP_TS_PIN_MODE_ENABLE = 3,
+    AXP_TS_PIN_MODE_DISABLE     = 0,
+    AXP_TS_PIN_MODE_CHARGING    = 1,
+    AXP_TS_PIN_MODE_SAMPLING    = 2,
+    AXP_TS_PIN_MODE_ENABLE      = 3,
 } axp_ts_pin_mode_t;
 
 //! Only AXP192 and AXP202 have gpio function
@@ -586,7 +593,64 @@ typedef enum {
     AXP1XX_CHARGE_CUR_1320MA,
 } axp1xx_charge_current_t;
 
-  typedef uint8_t (*axp_com_fptr_t)(uint8_t dev_addr, uint8_t reg_addr, uint8_t *data, uint8_t len);
+
+typedef enum {
+    AXP20X_VBUS_LIMIT_900MA,
+    AXP20X_VBUS_LIMIT_500MA,
+    AXP20X_VBUS_LIMIT_100MA,
+    AXP20X_VBUS_LIMIT_OFF
+} axp202_limit_setting_t;
+
+
+typedef enum {
+    AXP192_VBUS_LIMIT_500MA,
+    AXP192_VBUS_LIMIT_100MA,
+    AXP192_VBUS_LIMIT_OFF
+} axp192_limit_setting_t;
+
+
+typedef enum {
+    AXP202_DCDC_AUTO_MODE,
+    AXP202_DCDC_PWM_MODE
+} axp202_dc_mode_t;
+
+/**
+ * @brief  Voltage rise slope control
+ */
+typedef enum {
+    AXP202_VRC_LEVEL0,  // 25mV/15.625us=1.6mV/us
+    AXP202_VRC_LEVEL1,  //25mV/31.250us=0.8mV/us
+} axp202_vrc_control_t;
+
+typedef enum {
+    AXP202_BACKUP_VOLTAGE_3V1,
+    AXP202_BACKUP_VOLTAGE_3V0,
+    AXP202_BACKUP_VOLTAGE_3V6,
+    AXP202_BACKUP_VOLTAGE_2V5,
+} axp202_backup_voltage_t;
+
+typedef enum {
+    AXP202_BACKUP_CURRENT_50UA,
+    AXP202_BACKUP_CURRENT_100UA,
+    AXP202_BACKUP_CURRENT_200UA,
+    AXP202_BACKUP_CURRENT_400UA,
+} axp202_backup_current_t;
+
+typedef enum {
+    AXP202_PRECHARGE_MINUTES_40,
+    AXP202_PRECHARGE_MINUTES_50,
+    AXP202_PRECHARGE_MINUTES_60,
+    AXP202_PRECHARGE_MINUTES_70,
+} axp202_precharge_timeout_t;
+
+typedef enum {
+    AXP202_CONSTANT_CUR_TIMEOUT_HOURS_6,
+    AXP202_CONSTANT_CUR_TIMEOUT_HOURS_8,
+    AXP202_CONSTANT_CUR_TIMEOUT_HOURS_10,
+    AXP202_CONSTANT_CUR_TIMEOUT_HOURS_12,
+} axp202_constant_current_t;
+
+typedef int (*axp_com_fptr_t)(uint8_t dev_addr, uint8_t reg_addr, uint8_t *data, uint8_t len);
 
 
     /*int begin(TwoWire &port = Wire, uint8_t addr = AXP202_SLAVE_ADDRESS, bool isAxp173 = false);
