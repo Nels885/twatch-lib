@@ -110,7 +110,7 @@ void ft6x36_init(uint16_t dev_addr, FT6X36_IRQ_HANDLER pfn_handler) {
   /* Install our user button interrupt handler. */
   if (gpio_install_isr_service(0) != ESP_OK)
     printf("[isr2] Error while installing service\r\n");
-  gpio_isr_handler_add(GPIO_NUM_38, _touch_interrupt_handler, NULL);
+  gpio_isr_handler_add(TOUCH_INT, _touch_interrupt_handler, NULL);
 
   /* Save IRQ Handler. */
   ft6236_irq_handler = pfn_handler;

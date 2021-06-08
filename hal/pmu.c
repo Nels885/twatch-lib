@@ -5,6 +5,7 @@
 #include "esp_sleep.h"
 #include "esp_err.h"
 #include "hal/pmu.h"
+#include "boards/select.h"
 
 #define AXP_CHECK(x) if(x != AXP_PASS) return ESP_FAIL
 
@@ -38,7 +39,7 @@ esp_err_t twatch_pmu_init(void)
   gpio_config_t irq_conf;
 
   /* Initialize AXP202 IRQ pin as input pin. */
-  rtc_gpio_deinit(GPIO_NUM_35);
+  rtc_gpio_deinit(AXP202_INT);
   irq_conf.intr_type = GPIO_INTR_NEGEDGE;
   irq_conf.pin_bit_mask = (1ULL << 35);
   irq_conf.mode = GPIO_MODE_INPUT;
@@ -50,7 +51,7 @@ esp_err_t twatch_pmu_init(void)
   /* Install our user button interrupt handler. */
   if (gpio_install_isr_service(0) != ESP_OK)
     printf("[isr] Error while installing service\r\n");
-  gpio_isr_handler_add(GPIO_NUM_35, _axpxx_interrupt_handler, NULL);
+  gpio_isr_handler_add(AXP202_INT, _axpxx_interrupt_handler, NULL);
 
   /* Initialize I2C master communication. */
   axpxx_i2c_init();
@@ -208,7 +209,7 @@ bool twatch_pmu_is_userbtn_pressed(void)
 void twatch_pmu_deepsleep(void)
 {
   /* Set GPIO 35 as wakeup signal. */
-  esp_sleep_enable_ext0_wakeup(GPIO_NUM_35, 0);
+  esp_sleep_enable_ext0_wakeup(AXP202_INT, 0);
 
   /* Go into deep sleep mode. */
   esp_deep_sleep_start();

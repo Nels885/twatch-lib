@@ -44,7 +44,6 @@ github:https://github.com/lewisxhe/AXP202X_Libraries
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "driver/gpio.h"
 #include "driver/i2c.h"
 #include "esp_err.h"
 #include "esp_log.h"
@@ -61,8 +60,8 @@ github:https://github.com/lewisxhe/AXP202X_Libraries
 
 #define AXP202_I2C_ADDRESS AXP202_SLAVE_ADDRESS
 #define AXP202_I2C_NUM I2C_NUM_0
-#define AXP202_SDA_PIN GPIO_NUM_21
-#define AXP202_SCL_PIN GPIO_NUM_22
+#define AXP202_SDA_PIN I2C_PRI_SDA_PIN
+#define AXP202_SCL_PIN I2C_PRI_SCL_PIN
 
 #ifdef AXP_DEBUG_PORT
 #define AXP_DEBUG(fmt, ...) AXP_DEBUG_PORT.printf_P((PGM_P)PSTR(fmt), ##__VA_ARGS__)

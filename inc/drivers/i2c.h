@@ -3,11 +3,7 @@
 
 #include "driver/gpio.h"
 #include "driver/i2c.h"
-
-#define I2C_PRI_SDA_PIN (GPIO_NUM_21)
-#define I2C_PRI_SCL_PIN (GPIO_NUM_22)
-#define I2C_SEC_SDA_PIN (23)
-#define I2C_SEC_SCL_PIN (32)
+#include "boards/select.h"
 
 typedef enum {
   I2C_PRI,

@@ -1,4 +1,5 @@
 #include "drivers/pcf8563.h"
+#include "boards/select.h"
 
 /**
  * Helpers
@@ -74,7 +75,7 @@ esp_err_t pcf8563_init(void)
   /* Install our user button interrupt handler. */
   if (gpio_install_isr_service(0) != ESP_OK)
     printf("[isr2] Error while installing service\r\n");
-  gpio_isr_handler_add(GPIO_NUM_37, _pcf8563_interrupt_handler, NULL);
+  gpio_isr_handler_add(RTC_INT_PIN, _pcf8563_interrupt_handler, NULL);
 
   /* Enable Twatch i2c bus. */
   twatch_i2c_init();

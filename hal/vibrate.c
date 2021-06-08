@@ -1,4 +1,5 @@
 #include "hal/vibrate.h"
+#include "boards/select.h"
 
 #define TAG "[hal::vibrate]"
 
@@ -17,13 +18,13 @@ void _twatch_vibration_task(void *parameter)
         ESP_LOGI(TAG, "single vibration enabled");
 
         /* Enable motor. */
-        gpio_set_level(GPIO_NUM_4, 1);
+        gpio_set_level(MOTOR_PIN, 1);
 
         /* Wait for duration. */
         vTaskDelay(vibration_config->duration/portTICK_RATE_MS);
 
         /* Stop motor. */
-        gpio_set_level(GPIO_NUM_4, 0);
+        gpio_set_level(MOTOR_PIN, 0);
       }
       break;
 
@@ -35,7 +36,7 @@ void _twatch_vibration_task(void *parameter)
           if (vibration_config->pattern[i].level == 1)
           {
             /* Enable motor. */
-            gpio_set_level(GPIO_NUM_4, 1);
+            gpio_set_level(MOTOR_PIN, 1);
 
             /* Wait for duration. */
             vTaskDelay(vibration_config->pattern[i].duration/portTICK_RATE_MS);
@@ -43,7 +44,7 @@ void _twatch_vibration_task(void *parameter)
           else
           {
             /* Disable motor. */
-            gpio_set_level(GPIO_NUM_4, 0);
+            gpio_set_level(MOTOR_PIN, 0);
 
             /* Wait for duration. */
             vTaskDelay(vibration_config->pattern[i].duration/portTICK_RATE_MS);
@@ -72,7 +73,7 @@ esp_err_t twatch_vibrate_init(void)
 
   /* Configure GPIO. */
   motor.mode = GPIO_MODE_OUTPUT;
-  motor.pin_bit_mask = (1ULL << GPIO_NUM_4);
+  motor.pin_bit_mask = (1ULL << MOTOR_PIN);
   gpio_config(&motor);
 
   /* Initialized. */
