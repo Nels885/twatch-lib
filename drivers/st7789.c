@@ -426,7 +426,7 @@ uint8_t st7789_get_pixel(int x, int y)
  * @param color: pixel color (12 bits)
  **/
 
-void st7789_set_pixel(int x, int y, uint8_t color)
+void st7789_set_pixel(int x, int y, uint16_t color)
 {
   /* Sanity checks. */
   if ((x < g_dw_x0) || (x > g_dw_x1) || (y<g_dw_y0) || (y>g_dw_y1))
@@ -449,7 +449,7 @@ void st7789_set_pixel(int x, int y, uint8_t color)
  * @param color: pixel color (12 bits)
  **/
 
-void _st7789_set_pixel(int x, int y, uint8_t color)
+void _st7789_set_pixel(int x, int y, uint16_t color)
 {
   /* Sanity checks. */
   if ((x < g_dw_x0) || (x > g_dw_x1) || (y<g_dw_y0) || (y>g_dw_y1))
@@ -469,7 +469,7 @@ void _st7789_set_pixel(int x, int y, uint8_t color)
  * @param color: 8 bpp color
  **/
 
-void st7789_fill_region(int x, int y, int width, int height, uint8_t color)
+void st7789_fill_region(int x, int y, int width, int height, uint16_t color)
 {
   int _y;
 
@@ -517,7 +517,7 @@ void st7789_fill_region(int x, int y, int width, int height, uint8_t color)
  * @param color: line color.
  **/
 
-void st7789_draw_fastline(int x0, int y, int x1, uint8_t color)
+void st7789_draw_fastline(int x0, int y, int x1, uint16_t color)
 {
   int _x0,_x1,_y;
   int n=0;
@@ -632,7 +632,7 @@ void st7789_copy_line(int x, int y, uint8_t *p_line, int nb_pixels)
  * @param x1: X coordinate of the end of the line
  * @param y1: y coordinate of the end of the line
  **/
-void st7789_draw_line(int x0, int y0, int x1, int y1, uint8_t color)
+void st7789_draw_line(int x0, int y0, int x1, int y1, uint16_t color)
 {
   int x, y, dx, dy;
   float e;
@@ -778,7 +778,7 @@ void st7789_draw_line(int x0, int y0, int x1, int y1, uint8_t color)
  * @param color: circle color
  **/
 
-void st7789_draw_circle(int xc, int yc, int r, uint8_t color)
+void st7789_draw_circle(int xc, int yc, int r, uint16_t color)
 {
   int x = 0;
   int y = r;
@@ -828,7 +828,7 @@ void st7789_draw_circle(int xc, int yc, int r, uint8_t color)
  * @param color: disc color
  **/
 
-void st7789_draw_disc(int xc, int yc, int r, uint8_t color)
+void st7789_draw_disc(int xc, int yc, int r, uint16_t color)
 {
   int i;
 
